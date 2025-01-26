@@ -63,6 +63,16 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Ensure target directory exists
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            mkdir -p ~/kittygram
+            echo "Target directory created or already exists."
+
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -70,7 +80,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd kittygram
+            cd ~/kittygram
             docker compose down
             docker compose pull
             docker compose up -d
@@ -83,3 +93,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
+
