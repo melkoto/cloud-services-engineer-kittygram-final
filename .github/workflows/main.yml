@@ -122,7 +122,12 @@ jobs:
             cat <<EOF > ~/kittygram/.env
             SECRET_KEY=${{ secrets.SECRET_KEY }}
             DEBUG=${{ secrets.DEBUG }}
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            DB_ENGINE=${{ secrets.DB_ENGINE }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
             EOF
 
       - name: Deploy to server
@@ -134,11 +139,19 @@ jobs:
           script: |
             set -e
             cd ~/kittygram
-            docker compose down || { echo "Failed to bring down existing containers"; exit 1; }
-            docker compose pull || { echo "Failed to pull Docker images"; exit 1; }
-            docker compose up -d || { echo "Failed to start Docker containers"; exit 1; }
-            docker compose exec backend python manage.py migrate || { echo "Failed to run migrations"; exit 1; }
-            docker compose exec backend python manage.py collectstatic --noinput || { echo "Failed to collect static files"; exit 1; }
+            docker compose down || { echo "Не удалось остановить существующие контейнеры"; exit 1; }
+            docker compose pull || { echo "Не удалось загрузить Docker образы"; exit 1; }
+            docker compose up -d || { echo "Не удалось запустить Docker контейнеры"; exit 1; }
+            
+            # Ожидание готовности PostgreSQL
+            echo "Ожидание готовности PostgreSQL..."
+            while ! docker compose exec postgres pg_isready -U $POSTGRES_USER; do
+              sleep 1
+            done
+            echo "PostgreSQL готов."
+            
+            docker compose exec backend python manage.py migrate || { echo "Не удалось выполнить миграции"; exit 1; }
+            docker compose exec backend python manage.py collectstatic --noinput || { echo "Не удалось собрать статические файлы"; exit 1; }
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
