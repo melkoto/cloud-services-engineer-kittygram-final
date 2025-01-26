@@ -8,11 +8,13 @@ RUN apk add --no-cache \
     libffi-dev \
     openssl-dev \
     python3-dev \
-    make
+    make \
+    build-base
 
 COPY requirements.txt .
 
 RUN pip install --upgrade pip setuptools wheel
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
