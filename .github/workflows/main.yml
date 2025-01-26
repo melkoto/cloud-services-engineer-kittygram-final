@@ -58,37 +58,37 @@ jobs:
           context: ./nginx
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
           push: true
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Install Docker
+      - name: Install Docker and Docker Compose
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # Установка Docker
-            if ! command -v docker &> /dev/null
-            then
-              echo "Docker not found, installing..."
+            # Установка Docker, если его нет
+            if ! command -v docker &> /dev/null; then
+              echo "Installing Docker..."
               sudo apt update
               sudo apt install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
-            else
-              echo "Docker is already installed."
             fi
 
-            # Добавление пользователя в группу Docker
-            if ! groups | grep -q "\bdocker\b"; then
-              echo "Adding user to docker group..."
-              sudo usermod -aG docker $USER
+            # Проверяем и устанавливаем Docker Compose
+            if ! docker compose version &> /dev/null; then
+              echo "Installing Docker Compose..."
+              sudo mkdir -p /usr/local/lib/docker/cli-plugins
+              sudo curl -SL https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+              sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
 
-            # Проверка установки Docker
-            docker --version
+            # Проверяем установку
+            docker compose version
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
