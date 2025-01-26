@@ -147,9 +147,16 @@ jobs:
             set -a
             source .env
             set +a
-
-            # Проверка значения POSTGRES_USER для отладки
+            
+            # Проверка значений переменных для отладки
+            echo "Проверка переменных окружения:"
+            echo "SECRET_KEY установлено: ${SECRET_KEY:+Да}"
+            echo "DEBUG установлено: ${DEBUG:+Да}"
+            echo "DB_ENGINE: $DB_ENGINE"
+            echo "DB_NAME: $DB_NAME"
             echo "POSTGRES_USER: $POSTGRES_USER"
+            echo "DB_HOST: $DB_HOST"
+            echo "DB_PORT: $DB_PORT"
 
             # Ожидание готовности PostgreSQL
             echo "Ожидание готовности PostgreSQL..."
