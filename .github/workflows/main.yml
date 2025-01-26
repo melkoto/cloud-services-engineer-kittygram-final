@@ -58,28 +58,35 @@ jobs:
           context: ./nginx
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
           push: true
-
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Copy docker-compose.yml via ssh
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml"
-          target: "~/kittygram"
-
-      - name: Install Docker and Docker Compose on server
+      - name: Ensure directory exists
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # Install Docker if not installed
+            mkdir -p ~/kittygram
+
+      - name: Copy docker-compose.yml via SSH
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "~/kittygram/docker-compose.yml"
+
+      - name: Install Docker and Docker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
             if ! command -v docker &> /dev/null; then
               sudo apt update
               sudo apt install -y docker.io
@@ -87,17 +94,13 @@ jobs:
               sudo systemctl enable docker
             fi
 
-            # Install Docker Compose if not installed
             if ! docker compose version &> /dev/null; then
               sudo mkdir -p /usr/local/lib/docker/cli-plugins
               sudo curl -SL https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
               sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
 
-            # Verify installation
-            docker compose version
-
-      - name: Executing remote SSH commands to deploy
+      - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -105,11 +108,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/kittygram
-            sudo docker compose pull
-            sudo docker compose down
-            sudo docker compose up -d
-            sudo docker compose exec backend python manage.py migrate
-            sudo docker compose exec backend python manage.py collectstatic --noinput
+            docker compose down
+            docker compose pull
+            docker compose up -d
+            docker compose exec backend python manage.py migrate
+            docker compose exec backend python manage.py collectstatic --noinput
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
@@ -117,3 +120,4 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
+

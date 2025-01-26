@@ -18,7 +18,7 @@ services:
     build: ./frontend
     restart: always
     volumes:
-      - static:/frontend/static
+      - frontend_static:/frontend/static
 
   gateway:
     image: melkoto/kittygram_gateway:latest
@@ -27,7 +27,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - static:/var/www/html
       - static:/static
       - media:/media
     depends_on:
@@ -46,3 +45,4 @@ volumes:
   static:
   media:
   pg_data:
+  frontend_static:
