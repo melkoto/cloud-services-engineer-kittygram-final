@@ -111,12 +111,13 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            set -e
             cd ~/kittygram
-            docker compose down
-            docker compose pull
-            docker compose up -d
-            docker compose exec backend python manage.py migrate
-            docker compose exec backend python manage.py collectstatic --noinput
+            docker compose down || { echo "Failed to bring down existing containers"; exit 1; }
+            docker compose pull || { echo "Failed to pull Docker images"; exit 1; }
+            docker compose up -d || { echo "Failed to start Docker containers"; exit 1; }
+            docker compose exec backend python manage.py migrate || { echo "Failed to run migrations"; exit 1; }
+            docker compose exec backend python manage.py collectstatic --noinput || { echo "Failed to collect static files"; exit 1; }
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
@@ -124,4 +125,3 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
-
