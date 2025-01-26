@@ -30,6 +30,7 @@ services:
     depends_on:
       - backend
       - frontend
+      - postgres
 
   postgres:
     image: postgres:13

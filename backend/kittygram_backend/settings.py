@@ -54,6 +54,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
+# Отладочная печать для проверки значений переменных окружения
+print("DATABASE CONFIGURATION:")
+print("ENGINE:", os.getenv('DB_ENGINE'))
+print("NAME:", os.getenv('DB_NAME'))
+print("USER:", os.getenv('POSTGRES_USER'))
+print("PASSWORD:", os.getenv('POSTGRES_PASSWORD'))
+print("HOST:", os.getenv('DB_HOST'))
+print("PORT:", os.getenv('DB_PORT'))
+
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
