@@ -9,11 +9,15 @@ RUN apk add --no-cache \
     openssl-dev \
     python3-dev \
     make \
-    build-base
+    build-base \
+    libyaml-dev
+
+RUN pip install --upgrade pip
+RUN pip install setuptools==65.5.1 wheel
+
+RUN pip install cython
 
 COPY requirements.txt .
-
-RUN pip install --upgrade pip setuptools wheel
 
 RUN pip install --no-cache-dir -r requirements.txt
 
