@@ -139,30 +139,35 @@ jobs:
           script: |
             set -e
             cd ~/kittygram
+            docker compose down || { echo "Не удалось остановить существующие контейнеры"; exit 1; }
+            docker compose pull || { echo "Не удалось загрузить Docker образы"; exit 1; }
+            docker compose up -d || { echo "Не удалось запустить Docker контейнеры"; exit 1; }
 
-            # Остановка и запуск контейнеров
-            docker compose -f docker-compose.production.yml down || { echo "Не удалось остановить контейнеры"; exit 1; }
-            docker compose -f docker-compose.production.yml pull || { echo "Не удалось обновить образы"; exit 1; }
-            docker compose -f docker-compose.production.yml up -d || { echo "Не удалось запустить контейнеры"; exit 1; }
+            # Загрузка переменных из .env
+            set -a
+            source .env
+            set +a
+            
+            # Проверка значений переменных для отладки
+            echo "Проверка переменных окружения:"
+            echo "SECRET_KEY установлено: ${SECRET_KEY:+Да}"
+            echo "DEBUG установлено: ${DEBUG:+Да}"
+            echo "DB_ENGINE: $DB_ENGINE"
+            echo "DB_NAME: $DB_NAME"
+            echo "POSTGRES_USER: $POSTGRES_USER"
+            echo "DB_HOST: $DB_HOST"
+            echo "DB_PORT: $DB_PORT"
 
-            # Ожидание готовности базы данных
+            # Ожидание готовности PostgreSQL
             echo "Ожидание готовности PostgreSQL..."
-            while ! docker compose -f docker-compose.production.yml exec postgres pg_isready -U $POSTGRES_USER; do
+            while ! docker compose exec postgres pg_isready -U $POSTGRES_USER; do
               sleep 1
             done
             echo "PostgreSQL готов."
 
-            # Выполнение миграций
-            echo "Выполнение миграций..."
-            sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate || { echo "Не удалось выполнить миграции"; exit 1; }
-
-            # Сборка статических файлов
-            echo "Сборка статических файлов..."
-            sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic --noinput || { echo "Не удалось собрать статические файлы"; exit 1; }
-
-            # Копирование статических файлов в директорию
-            echo "Копирование статических файлов..."
-            sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/ || { echo "Не удалось скопировать статические файлы"; exit 1; }
+            # Выполнение миграций и сборка статических файлов
+            docker compose exec backend python manage.py migrate || { echo "Не удалось выполнить миграции"; exit 1; }
+            docker compose exec backend python manage.py collectstatic --noinput || { echo "Не удалось собрать статические файлы"; exit 1; }
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
