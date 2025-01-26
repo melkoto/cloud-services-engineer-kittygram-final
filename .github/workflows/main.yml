@@ -142,14 +142,23 @@ jobs:
             docker compose down || { echo "Не удалось остановить существующие контейнеры"; exit 1; }
             docker compose pull || { echo "Не удалось загрузить Docker образы"; exit 1; }
             docker compose up -d || { echo "Не удалось запустить Docker контейнеры"; exit 1; }
-            
+
+            # Загрузка переменных из .env
+            set -a
+            source .env
+            set +a
+
+            # Проверка значения POSTGRES_USER для отладки
+            echo "POSTGRES_USER: $POSTGRES_USER"
+
             # Ожидание готовности PostgreSQL
             echo "Ожидание готовности PostgreSQL..."
             while ! docker compose exec postgres pg_isready -U $POSTGRES_USER; do
               sleep 1
             done
             echo "PostgreSQL готов."
-            
+
+            # Выполнение миграций и сборка статических файлов
             docker compose exec backend python manage.py migrate || { echo "Не удалось выполнить миграции"; exit 1; }
             docker compose exec backend python manage.py collectstatic --noinput || { echo "Не удалось собрать статические файлы"; exit 1; }
 
