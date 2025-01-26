@@ -63,34 +63,41 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Install Docker and Docker Compose
+      - name: Copy docker-compose.yml via ssh
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "~/kittygram"
+
+      - name: Install Docker and Docker Compose on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # Установка Docker, если его нет
+            # Install Docker if not installed
             if ! command -v docker &> /dev/null; then
-              echo "Installing Docker..."
               sudo apt update
               sudo apt install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
             fi
 
-            # Проверяем и устанавливаем Docker Compose
+            # Install Docker Compose if not installed
             if ! docker compose version &> /dev/null; then
-              echo "Installing Docker Compose..."
               sudo mkdir -p /usr/local/lib/docker/cli-plugins
               sudo curl -SL https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
               sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
 
-            # Проверяем установку
+            # Verify installation
             docker compose version
 
-      - name: Deploy to server
+      - name: Executing remote SSH commands to deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -98,11 +105,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/kittygram
-            docker compose down
-            docker compose pull
-            docker compose up -d
-            docker compose exec backend python manage.py migrate
-            docker compose exec backend python manage.py collectstatic --noinput
+            sudo docker compose pull
+            sudo docker compose down
+            sudo docker compose up -d
+            sudo docker compose exec backend python manage.py migrate
+            sudo docker compose exec backend python manage.py collectstatic --noinput
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@master
@@ -110,4 +117,3 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
-
