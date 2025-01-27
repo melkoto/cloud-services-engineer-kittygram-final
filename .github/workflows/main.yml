@@ -2,18 +2,15 @@ name: CI/CD Kittygram
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  test:
+  backend_tests:
     runs-on: ubuntu-latest
-    env:
-      DB_ENGINE: ${{ secrets.DB_ENGINE }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
     services:
       postgres:
         image: postgres:13
@@ -25,154 +22,101 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install Dependencies
         working-directory: ./backend
-        run: |
-          pip install -r requirements.txt
-
+        run: pip install -r requirements.txt
       - name: Lint backend
         working-directory: ./backend
         run: |
           pip install flake8
           flake8 .
-
       - name: Run backend tests
         working-directory: ./backend
-        run: |
-          python manage.py test
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        run: python manage.py test
 
   build-and-push:
-    needs: test
+    needs: backend_tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [backend, frontend, gateway]
     steps:
       - uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
+      - name: Docker Login
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push backend
+      - name: Build and push ${{ matrix.service }}
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
+          context: ./${{ matrix.service == 'gateway' && 'nginx' || matrix.service }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest
           push: true
-
-      - name: Build and push frontend
-        uses: docker/build-push-action@v4
-        with:
-          context: ./frontend
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
-          push: true
-
-      - name: Build and push gateway
-        uses: docker/build-push-action@v4
-        with:
-          context: ./nginx
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
-          push: true
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest,mode=max
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: List files before SCP
-        run: ls -la
-
-      - name: Ensure directory exists on server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            mkdir -p ~/kittygram
-
-      - name: Copy docker-compose.yml via SCP
-        uses: appleboy/scp-action@v0.1.1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: docker-compose.yml
-          target: "~/kittygram"
-          port: 22
-          timeout: 30s
-          command_timeout: 10m
-          proxy_port: 22
-          proxy_timeout: 30s
-
-      - name: Create .env on server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cat <<EOF > ~/kittygram/.env
-            SECRET_KEY=${{ secrets.SECRET_KEY }}
-            DEBUG=${{ secrets.DEBUG }}
-            DB_ENGINE=${{ secrets.DB_ENGINE }}
-            DB_NAME=${{ secrets.DB_NAME }}
-            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            DB_HOST=${{ secrets.DB_HOST }}
-            DB_PORT=${{ secrets.DB_PORT }}
-            EOF
-
       - name: Deploy to server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.13
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
+            mkdir -p ~/kittygram
+            scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/kittygram/
+            cat <<EOF > ~/kittygram/.env
+            SECRET_KEY=${{ secrets.SECRET_KEY }}
+            DEBUG=${{ secrets.DEBUG }}
+            DB_ENGINE=${{ secrets.DB_ENGINE }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            POSTGRES_DB=${{ secrets.DB_NAME }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
+            EOF
             cd ~/kittygram
-            docker compose down || { echo "Не удалось остановить существующие контейнеры"; exit 1; }
-            docker compose pull || { echo "Не удалось загрузить Docker образы"; exit 1; }
-            docker compose up -d || { echo "Не удалось запустить Docker контейнеры"; exit 1; }
-
-            # Загрузка переменных из .env
-            set -a
-            source .env
-            set +a
-            
-            # Проверка значений переменных для отладки
-            echo "Проверка переменных окружения:"
-            echo "SECRET_KEY установлено: ${SECRET_KEY:+Да}"
-            echo "DEBUG установлено: ${DEBUG:+Да}"
-            echo "DB_ENGINE: $DB_ENGINE"
-            echo "DB_NAME: $DB_NAME"
-            echo "POSTGRES_USER: $POSTGRES_USER"
-            echo "DB_HOST: $DB_HOST"
-            echo "DB_PORT: $DB_PORT"
-
-            # Ожидание готовности PostgreSQL
-            echo "Ожидание готовности PostgreSQL..."
-            while ! docker compose exec postgres pg_isready -U $POSTGRES_USER; do
-              sleep 1
-            done
-            echo "PostgreSQL готов."
-
-            # Выполнение миграций и сборка статических файлов
-            docker compose exec backend python manage.py migrate || { echo "Не удалось выполнить миграции"; exit 1; }
-            docker compose exec backend python manage.py collectstatic --noinput || { echo "Не удалось собрать статические файлы"; exit 1; }
-
+            docker compose down
+            docker compose pull
+            docker compose up -d
+            docker compose exec backend python manage.py migrate
+            docker compose exec backend python manage.py collectstatic --noinput
       - name: Send Telegram notification
-        uses: appleboy/telegram-action@master
+        if: success()
+        uses: appleboy/telegram-action@v0.0.1
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
+      - name: Send failure Telegram notification
+        if: failure()
+        uses: appleboy/telegram-action@v0.0.1
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: "❌ Deployment failed! Please check the workflow."
