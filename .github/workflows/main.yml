@@ -87,7 +87,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
           # Отключение кэширования:
-          no-cache: true
+          no-cache: false
 
   # Тестирование Frontend
   frontend_tests:
