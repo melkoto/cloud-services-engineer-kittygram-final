@@ -77,10 +77,10 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./${{ matrix.service == 'gateway' && 'nginx' || matrix.service }}
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest
+          tags: melkoto/kittygram_${{ matrix.service }}:latest
           push: true
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest,mode=max
+          cache-from: type=registry,ref=melkoto/kittygram_${{ matrix.service }}:latest
+          cache-to: type=registry,ref=melkoto/kittygram_${{ matrix.service }}:latest,mode=max
 
   deploy:
     needs: build-and-push

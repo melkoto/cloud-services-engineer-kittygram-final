@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./backend
+    image: melkoto/kittygram_backend:latest
     restart: always
     env_file:
       - .env
@@ -11,13 +11,13 @@ services:
       - postgres
 
   frontend:
-    build: ./frontend
+    image: melkoto/kittygram_frontend:latest
     restart: always
     volumes:
       - frontend_static:/frontend/static
 
   gateway:
-    build: ./nginx
+    image: melkoto/kittygram_gateway:latest
     restart: always
     ports:
       - "80:80"
