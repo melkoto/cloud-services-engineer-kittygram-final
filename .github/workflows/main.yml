@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [backend, frontend, gateway]
+        service: [ backend, frontend, gateway ]
     steps:
       - uses: actions/checkout@v3
 
