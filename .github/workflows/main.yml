@@ -72,9 +72,11 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ./backend/
+          context: ./${{ matrix.service == 'gateway' && 'nginx' || matrix.service }}
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_${{ matrix.service }}:latest
+          cache-from: type=registry,ref=melkoto/kittygram_${{ matrix.service }}:latest
+          cache-to: type=registry,ref=melkoto/kittygram_${{ matrix.service }}:latest,mode=max
 
   deploy:
     needs: build-and-push
