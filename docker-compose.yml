@@ -1,6 +1,6 @@
 services:
   backend:
-    image: melkoto/kittygram_backend
+    image: melkoto/kittygram_backend:latest
     restart: always
     env_file:
       - .env
@@ -11,14 +11,14 @@ services:
       - postgres
 
   frontend:
-    image: melkoto/kittygram_frontend
+    image: melkoto/kittygram_frontend:latest
     restart: always
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - frontend_static:/frontend/static
 
   gateway:
-    image: melkoto/kittygram_gateway
+    image: melkoto/kittygram_gateway:latest
     restart: always
     ports:
       - "80:80"
