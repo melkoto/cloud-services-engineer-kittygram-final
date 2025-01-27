@@ -13,7 +13,6 @@ services:
   frontend:
     image: melkoto/kittygram_frontend:latest
     restart: always
-    command: ["serve", "-s", "build"]
     volumes:
       - frontend_static:/frontend/static
 

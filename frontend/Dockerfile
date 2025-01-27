@@ -1,13 +1,23 @@
+# Используем базовый образ Node.js версии 18
 FROM node:18
+
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-COPY package.json package.json
-COPY package-lock.json package-lock.json
+# Копируем package.json и package-lock.json для установки зависимостей
+COPY package.json package-lock.json ./
 
+# Устанавливаем зависимости
 RUN npm ci
 
+# Копируем весь проект в контейнер
 COPY . .
-RUN npm run build
-RUN npm install --global http-server
 
-CMD ["npx", "-y", "http-server", "-p", "8000", "/app/build"]
+# Выполняем сборку проекта
+RUN npm run build
+
+# Устанавливаем глобально сервер serve
+RUN npm install --global serve
+
+# Команда запуска контейнера
+CMD ["serve", "-s", "build", "-l", "8000"]
