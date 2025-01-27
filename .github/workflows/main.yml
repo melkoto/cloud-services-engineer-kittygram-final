@@ -87,8 +87,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.13
+        uses: appleboy/ssh-action@v0.1.16
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -114,18 +115,19 @@ jobs:
             docker compose up -d
             docker compose exec backend python manage.py migrate
             docker compose exec backend python manage.py collectstatic --noinput
-      - name: Send Telegram notification
+
+      - name: Send Telegram notification (успех)
         if: success()
-        uses: appleboy/telegram-action@v0.0.1
+        uses: appleboy/telegram-action@v0.3.0
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment successful! Kittygram is live at ${{ secrets.KITTYGRAM_DOMAIN }}"
-      - name: Send failure Telegram notification
+
+      - name: Send Telegram notification (ошибка)
         if: failure()
-        uses: appleboy/telegram-action@v0.0.1
+        uses: appleboy/telegram-action@v0.3.0
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "❌ Deployment failed! Please check the workflow."
-
