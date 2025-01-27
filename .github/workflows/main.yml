@@ -87,7 +87,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
           # Отключение кэширования:
-          no-cache: true
+          no-cache: false
 
   # Тестирование Frontend
   frontend_tests:
@@ -217,6 +217,6 @@ jobs:
       - name: Send message
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "✅ Deployment успешно выполнен! Kittygram доступен по адресу: ${{ secrets.KITTYGRAM_DOMAIN }}"
