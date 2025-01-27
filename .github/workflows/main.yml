@@ -82,7 +82,7 @@ jobs:
         with:
           context: ./backend/
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
+          tags: melkoto/kittygram_backend:latest
 
   # Тестирование Frontend
   frontend_tests:
