@@ -87,7 +87,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
           # Отключение кэширования:
-          # no-cache: true
+          no-cache: true
 
   # Тестирование Frontend
   frontend_tests:
@@ -132,7 +132,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
           # Отключение кэширования:
-          # no-cache: true
+          no-cache: true
 
   # Пуш Gateway Docker образа
   build_gateway_and_push_to_docker_hub:
@@ -156,7 +156,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
           # Отключение кэширования:
-          # no-cache: true
+          no-cache: true
 
   # Развёртывание на сервере
   deploy:
