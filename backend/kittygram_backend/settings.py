@@ -9,7 +9,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = "/app/collected_static"
+STATIC_URL = '/static/'
+STATIC_ROOT = '/static'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/app/media'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -54,23 +58,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
-# Отладочная печать для проверки значений переменных окружения
-print("DATABASE CONFIGURATION:")
-print("ENGINE:", os.getenv('DB_ENGINE'))
-print("NAME:", os.getenv('DB_NAME'))
-print("USER:", os.getenv('POSTGRES_USER'))
-print("PASSWORD:", os.getenv('POSTGRES_PASSWORD'))
-print("HOST:", os.getenv('DB_HOST', 'postgres'))
-print("PORT:", os.getenv('DB_PORT'))
-
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'HOST': os.getenv('DB_HOST', 'postgres'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -102,18 +97,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-STATIC_URL = '/static/'
-STATIC_ROOT = '/app/static'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/app/media'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -122,5 +110,4 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-
 }

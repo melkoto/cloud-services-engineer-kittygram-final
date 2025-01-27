@@ -87,6 +87,9 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
           # Отключение кэширования для предотвращения ошибок при удалении репозитория
+          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
+          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
+          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest,mode=max
 
   # Тестирование Frontend
   frontend_tests:
@@ -130,6 +133,10 @@ jobs:
           context: ./frontend/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
+          # Отключение кэширования для предотвращения ошибок при удалении репозитория
+          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
+          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
+          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest,mode=max
 
   # Пуш Gateway Docker образа
   build_gateway_and_push_to_docker_hub:
@@ -152,6 +159,10 @@ jobs:
           context: ./nginx/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
+          # Отключение кэширования для предотвращения ошибок при удалении репозитория
+          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
+          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
+          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest,mode=max
 
   # Развёртывание на сервере
   deploy:
@@ -201,7 +212,6 @@ jobs:
             sudo docker compose -f docker-compose.yml up -d
             sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
             sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic --noinput
-            sudo docker compose -f docker-compose.yml exec backend cp -r /app/collected_static/. /static/static/
             sudo docker system prune -af
 
   # Отправка Уведомлений в Telegram
