@@ -86,10 +86,8 @@ jobs:
           context: ./backend/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
-          # Отключение кэширования для предотвращения ошибок при удалении репозитория
-          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
-          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
-          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest,mode=max
+          # Отключение кэширования:
+          # no-cache: true
 
   # Тестирование Frontend
   frontend_tests:
@@ -133,10 +131,8 @@ jobs:
           context: ./frontend/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
-          # Отключение кэширования для предотвращения ошибок при удалении репозитория
-          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
-          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
-          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest,mode=max
+          # Отключение кэширования:
+          # no-cache: true
 
   # Пуш Gateway Docker образа
   build_gateway_and_push_to_docker_hub:
@@ -159,10 +155,8 @@ jobs:
           context: ./nginx/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
-          # Отключение кэширования для предотвращения ошибок при удалении репозитория
-          # После успешного первого пуша, можно раскомментировать следующие строки для использования кэша
-          # cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest
-          # cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/kittygram_gateway:latest,mode=max
+          # Отключение кэширования:
+          # no-cache: true
 
   # Развёртывание на сервере
   deploy:
