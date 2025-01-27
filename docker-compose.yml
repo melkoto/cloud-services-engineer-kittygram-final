@@ -13,6 +13,7 @@ services:
   frontend:
     image: melkoto/kittygram_frontend:latest
     restart: always
+    command: cp -r /app/build/. /frontend_static/
     volumes:
       - frontend_static:/frontend/static
 
