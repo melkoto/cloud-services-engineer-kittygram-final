@@ -54,7 +54,7 @@ jobs:
 
   build-and-push:
     needs: backend_tests
-    name: Push Docker image to DockerHub
+    name: Push Docker images to DockerHub
     runs-on: ubuntu-latest
     strategy:
       matrix:
