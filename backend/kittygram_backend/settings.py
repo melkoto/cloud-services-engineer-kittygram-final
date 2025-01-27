@@ -60,7 +60,7 @@ print("ENGINE:", os.getenv('DB_ENGINE'))
 print("NAME:", os.getenv('DB_NAME'))
 print("USER:", os.getenv('POSTGRES_USER'))
 print("PASSWORD:", os.getenv('POSTGRES_PASSWORD'))
-print("HOST:", os.getenv('DB_HOST'))
+print("HOST:", os.getenv('DB_HOST', 'postgres'))
 print("PORT:", os.getenv('DB_PORT'))
 
 DATABASES = {
