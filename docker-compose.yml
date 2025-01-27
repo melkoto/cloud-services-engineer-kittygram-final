@@ -1,6 +1,6 @@
 services:
   backend:
-#    image: melkoto/kittygram_backend:latest
+    image: melkoto/kittygram_backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
       - postgres
 
   frontend:
-#    image: melkoto/kittygram_frontend:latest
+    image: melkoto/kittygram_frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
       - frontend_static:/frontend/static
 
   gateway:
-#    image: melkoto/kittygram_gateway:latest
+    image: melkoto/kittygram_gateway:latest
     build:
       context: ./nginx
       dockerfile: Dockerfile
