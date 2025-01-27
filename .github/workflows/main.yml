@@ -96,8 +96,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: ./docker-compose.yml
           target: ~/kittygram/
-          # Optional: specify the port if it's not the default (22)
-          # port: 22
 
       - name: Deploy to server
         uses: appleboy/ssh-action@master
