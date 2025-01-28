@@ -32,7 +32,8 @@ services:
       - backend
     env_file: .env
     volumes:
-      - static:/staticfiles/
+      - static:/backend_static/collected_static
       - media:/media_static
+      - frontend:/frontend_static
     ports:
       - "80:80"
