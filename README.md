@@ -3,9 +3,5 @@
 
 https://github.com/melkoto/cloud-services-engineer-kittygram-final
 
-## Actions
-C 38 Попытки прошел
-![img.png](img.png)
-
-## Telegram чат
-![img_1.png](img_1.png)
+## Website url 
+- URL - http://51.250.46.16

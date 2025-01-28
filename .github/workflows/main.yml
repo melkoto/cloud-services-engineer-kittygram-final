@@ -87,7 +87,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_backend:latest
           # Отключение кэширования:
-          no-cache: false
+          no-cache: true
 
   # Тестирование Frontend
   frontend_tests:
@@ -214,9 +214,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
+      - name: Extract commit message
+        id: extract_commit_message
+        run: echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+
       - name: Send message
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: "✅ Deployment успешно выполнен! Kittygram доступен по адресу: ${{ secrets.KITTYGRAM_DOMAIN }}"
+          message: |
+            ✅ Deployment успешно выполнен! 
+            🌐 Kittygram доступен по адресу: ${{ secrets.KITTYGRAM_DOMAIN }}
+            👤 Автор коммита: ${{ github.actor }}
+            💬 Сообщение коммита: ${{ env.COMMIT_MESSAGE }}
+            🔗 Ссылка на коммит: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
