@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="fix deploy">
-      <change beforePath="$PROJECT_DIR$/backend/kittygram_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/kittygram_backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tests.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,23 +105,7 @@
       <workItem from="1737991169189" duration="153000" />
       <workItem from="1737996380656" duration="1785000" />
       <workItem from="1737998178440" duration="20013000" />
-      <workItem from="1738080077847" duration="2745000" />
-    </task>
-    <task id="LOCAL-00037" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1737924873359</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1737924873359</updated>
-    </task>
-    <task id="LOCAL-00038" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1737925867897</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1737925867897</updated>
+      <workItem from="1738080077847" duration="4290000" />
     </task>
     <task id="LOCAL-00039" summary="fix deploy">
       <option name="closed" value="true" />
@@ -498,7 +483,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738082340209</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="fix deploy">
+      <option name="closed" value="true" />
+      <created>1738082923271</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1738082923271</updated>
+    </task>
+    <task id="LOCAL-00087" summary="fix deploy">
+      <option name="closed" value="true" />
+      <created>1738083477180</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1738083477180</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
