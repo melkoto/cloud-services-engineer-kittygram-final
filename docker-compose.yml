@@ -19,7 +19,7 @@ services:
 
   frontend:
     env_file: .env
-    image: melkoto/kittygram_frontend:letest
+    image: melkoto/kittygram_frontend:latest
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static:/frontend_static
