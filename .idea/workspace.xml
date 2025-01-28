@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/kittygram_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/kittygram_backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +53,9 @@
         </option>
       </RecentBranches>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -107,23 +111,7 @@
       <workItem from="1737991169189" duration="153000" />
       <workItem from="1737996380656" duration="1785000" />
       <workItem from="1737998178440" duration="20013000" />
-      <workItem from="1738080077847" duration="6565000" />
-    </task>
-    <task id="LOCAL-00041" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1737928766198</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1737928766198</updated>
-    </task>
-    <task id="LOCAL-00042" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1737991225799</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1737991225799</updated>
+      <workItem from="1738080077847" duration="8425000" />
     </task>
     <task id="LOCAL-00043" summary="fix deploy">
       <option name="closed" value="true" />
@@ -501,7 +489,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738085704660</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="fix deploy">
+      <option name="closed" value="true" />
+      <created>1738088176822</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1738088176822</updated>
+    </task>
+    <task id="LOCAL-00091" summary="fix deploy">
+      <option name="closed" value="true" />
+      <created>1738088418217</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1738088418217</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -7,13 +7,13 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key-for-dev')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['*']
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/backend_static/static/'
+STATIC_ROOT = '/backend_static/collected_static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = '/media_static/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
