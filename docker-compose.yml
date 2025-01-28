@@ -5,7 +5,7 @@ services:
     env_file:
       - .env
     volumes:
-      - static:/static
+      - static:/backend_static
       - media:/app/media
     depends_on:
       - postgres
@@ -14,7 +14,7 @@ services:
     image: melkoto/kittygram_frontend:latest
     restart: always
     volumes:
-      - frontend_static:/app/build
+      - static:/frontend_static
 
   gateway:
     image: melkoto/kittygram_gateway:latest
@@ -22,7 +22,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - static:/static
+      - static:/staticfiles/
       - media:/app/media
     depends_on:
       - backend
