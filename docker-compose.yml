@@ -5,7 +5,7 @@ services:
     env_file:
       - .env
     volumes:
-      - static:/app/static
+      - static:/static
       - media:/app/media
     depends_on:
       - postgres
@@ -22,8 +22,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - frontend_static:/staticfiles
-      - media:/media
+      - static:/static
+      - media:/app/media
     depends_on:
       - backend
       - frontend
