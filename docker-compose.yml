@@ -1,7 +1,8 @@
 volumes:
-  pg_data:
-  static:
-  media:
+  pg_data:    # Для базы данных
+  static:     # Для статики
+  media:      # Для медиафайлов
+  frontend:   # Для фронтенда
 
 services:
   db:
@@ -24,6 +25,7 @@ services:
     volumes:
       - static:/backend_static/collected_static
       - frontend:/app/static
+
   gateway:
     image: melkoto/kittygram_gateway:latest
     depends_on:
