@@ -5,7 +5,7 @@ volumes:
   frontend:   # Для фронтенда
 
 services:
-  db:
+  postgres:
     image: postgres:13
     env_file: .env
     volumes:
@@ -21,10 +21,8 @@ services:
   frontend:
     env_file: .env
     image: melkoto/kittygram_frontend:latest
-    command: cp -r /app/build/. /frontend_static/
     volumes:
-      - static:/backend_static/collected_static
-      - frontend:/app/static
+      - static:/app/build
 
   gateway:
     image: melkoto/kittygram_gateway:latest
@@ -32,8 +30,8 @@ services:
       - backend
     env_file: .env
     volumes:
-      - static:/backend_static/collected_static
+      - static:/static
       - media:/media_static
-      - frontend:/frontend_static
+      - ./nginx/nginx.conf:/etc/nginx/templates/default.conf.template
     ports:
       - "80:80"

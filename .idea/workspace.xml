@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="fix deploy">
-      <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
-    </list>
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="fix deploy" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,15 +105,7 @@
       <workItem from="1737991169189" duration="153000" />
       <workItem from="1737996380656" duration="1785000" />
       <workItem from="1737998178440" duration="20013000" />
-      <workItem from="1738080077847" duration="9644000" />
-    </task>
-    <task id="LOCAL-00045" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1737998199613</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1737998199613</updated>
+      <workItem from="1738080077847" duration="10907000" />
     </task>
     <task id="LOCAL-00046" summary="fix deploy">
       <option name="closed" value="true" />
@@ -501,7 +491,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738090840882</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="fix deploy">
+      <option name="closed" value="true" />
+      <created>1738091399024</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1738091399024</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
