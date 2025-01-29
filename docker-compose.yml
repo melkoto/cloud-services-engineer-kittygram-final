@@ -32,6 +32,5 @@ services:
     volumes:
       - static:/static
       - media:/media_static
-      - ./nginx/nginx.conf:/etc/nginx/templates/default.conf.template
     ports:
       - "80:80"
