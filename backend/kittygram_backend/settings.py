@@ -7,7 +7,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key-for-dev')
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/backend_static/collected_static/'
