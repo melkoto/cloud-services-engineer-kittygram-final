@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="add terraform">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tests.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,15 +114,7 @@
       <workItem from="1737998178440" duration="20013000" />
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
-      <workItem from="1743512000458" duration="2757000" />
-    </task>
-    <task id="LOCAL-00049" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738002874678</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1738002874678</updated>
+      <workItem from="1743512000458" duration="4189000" />
     </task>
     <task id="LOCAL-00050" summary="fix deploy">
       <option name="closed" value="true" />
@@ -509,7 +500,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743381916894</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="add terraform">
+      <option name="closed" value="true" />
+      <created>1743516620495</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1743516620495</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
