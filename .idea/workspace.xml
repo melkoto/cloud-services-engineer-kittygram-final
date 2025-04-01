@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update cloud-init to install Docker with apt-get command&#10;&#10;Replaced `package` directives with explicit `apt-get` install for Docker and Docker Compose to ensure compatibility and correctness during setup. Adjusted commands to maintain Docker service enablement and startup." />
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,23 +114,7 @@
       <workItem from="1737998178440" duration="20013000" />
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
-      <workItem from="1743512000458" duration="5031000" />
-    </task>
-    <task id="LOCAL-00051" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738004215640</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1738004215640</updated>
-    </task>
-    <task id="LOCAL-00052" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738004576820</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1738004576820</updated>
+      <workItem from="1743512000458" duration="5802000" />
     </task>
     <task id="LOCAL-00053" summary="fix deploy">
       <option name="closed" value="true" />
@@ -506,7 +492,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743518105613</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="Add logging of Docker binary path during cloud-init&#10;&#10;This ensures the path of the Docker binary is recorded in `/tmp/docker_path.log`. It can help with troubleshooting and verifying the installation process in cloud-init.">
+      <option name="closed" value="true" />
+      <created>1743519005208</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1743519005209</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges.">
+      <option name="closed" value="true" />
+      <created>1743519289642</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1743519289642</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,6 +533,8 @@
     <MESSAGE value="fix deploy" />
     <MESSAGE value="add terraform" />
     <MESSAGE value="Update cloud-init to install Docker with apt-get command&#10;&#10;Replaced `package` directives with explicit `apt-get` install for Docker and Docker Compose to ensure compatibility and correctness during setup. Adjusted commands to maintain Docker service enablement and startup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update cloud-init to install Docker with apt-get command&#10;&#10;Replaced `package` directives with explicit `apt-get` install for Docker and Docker Compose to ensure compatibility and correctness during setup. Adjusted commands to maintain Docker service enablement and startup." />
+    <MESSAGE value="Add logging of Docker binary path during cloud-init&#10;&#10;This ensures the path of the Docker binary is recorded in `/tmp/docker_path.log`. It can help with troubleshooting and verifying the installation process in cloud-init." />
+    <MESSAGE value="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges." />
   </component>
 </project>

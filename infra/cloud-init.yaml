@@ -1,10 +1,11 @@
+apt:
+  config:
+    Acquire::ForceIPv4 "true"
 package_update: true
 package_upgrade: true
 packages:
   - docker.io
   - docker-compose
 runcmd:
-  - apt-get install -y docker.io docker-compose
   - systemctl enable docker
   - systemctl start docker
-  - sed -i 's|^Defaults\s\+secure_path=.*|Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"|' /etc/sudoers
