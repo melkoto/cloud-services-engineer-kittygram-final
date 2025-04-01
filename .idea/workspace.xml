@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Use IPv4 and update Ubuntu mirror in cloud-init config.&#10;&#10;Enabled IPv4-only for apt to avoid potential IPv6 issues. Replaced the Yandex Ubuntu mirror with the official Ubuntu archive for better reliability and global accessibility.">
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update Docker installation method in cloud-init script&#10;&#10;Replaced manual installation steps with the official Docker installation script for improved reliability and simplicity. Added the `usermod` command to ensure the `ubuntu` user is added to the Docker group.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infra/cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/infra/cloud-init.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infra/compute.tf" beforeDir="false" afterPath="$PROJECT_DIR$/infra/compute.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,15 +116,7 @@
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
       <workItem from="1743512000458" duration="7158000" />
-      <workItem from="1743521334183" duration="450000" />
-    </task>
-    <task id="LOCAL-00056" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738007025942</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1738007025943</updated>
+      <workItem from="1743521334183" duration="1252000" />
     </task>
     <task id="LOCAL-00057" summary="fix deploy">
       <option name="closed" value="true" />
@@ -510,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743521235051</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Update Docker installation method in cloud-init script&#10;&#10;Replaced manual installation steps with the official Docker installation script for improved reliability and simplicity. Added the `usermod` command to ensure the `ubuntu` user is added to the Docker group.">
+      <option name="closed" value="true" />
+      <created>1743521900762</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1743521900762</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -540,6 +540,7 @@
     <MESSAGE value="Enable IPv4 for apt and clean up Docker installation steps&#10;&#10;Force IPv4 for apt to prevent potential network issues during package installation. Removed redundant apt-get commands for Docker as packages are already specified for installation. Simplified the sudoers file operation by omitting unrelated configuration changes." />
     <MESSAGE value="Streamline package installation and enforce IPv4 usage&#10;&#10;Moved package installation to runcmd with explicit IPv4 enforcement via apt-get flags. Removed deprecated config and packages sections for better clarity and alignment with current practices." />
     <MESSAGE value="Use IPv4 and update Ubuntu mirror in cloud-init config.&#10;&#10;Enabled IPv4-only for apt to avoid potential IPv6 issues. Replaced the Yandex Ubuntu mirror with the official Ubuntu archive for better reliability and global accessibility." />
-    <option name="LAST_COMMIT_MESSAGE" value="Use IPv4 and update Ubuntu mirror in cloud-init config.&#10;&#10;Enabled IPv4-only for apt to avoid potential IPv6 issues. Replaced the Yandex Ubuntu mirror with the official Ubuntu archive for better reliability and global accessibility." />
+    <MESSAGE value="Update Docker installation method in cloud-init script&#10;&#10;Replaced manual installation steps with the official Docker installation script for improved reliability and simplicity. Added the `usermod` command to ensure the `ubuntu` user is added to the Docker group." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Docker installation method in cloud-init script&#10;&#10;Replaced manual installation steps with the official Docker installation script for improved reliability and simplicity. Added the `usermod` command to ensure the `ubuntu` user is added to the Docker group." />
   </component>
 </project>
