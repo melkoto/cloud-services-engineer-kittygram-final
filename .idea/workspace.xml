@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Add cloud-init wait step after Terraform apply&#10;&#10;This ensures sufficient time for cloud-init to complete its tasks before proceeding. The step waits for 10 minutes, improving deployment stability and reliability.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infra/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/infra/variables.tf" afterDir="false" />
-    </list>
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,15 +113,7 @@
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
       <workItem from="1743512000458" duration="7158000" />
-      <workItem from="1743521334183" duration="23271000" />
-    </task>
-    <task id="LOCAL-00064" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738013224968</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1738013224968</updated>
+      <workItem from="1743521334183" duration="23798000" />
     </task>
     <task id="LOCAL-00065" summary="fix deploy">
       <option name="closed" value="true" />
@@ -510,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743543885067</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment.">
+      <option name="closed" value="true" />
+      <created>1743549899215</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1743549899215</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -546,6 +543,7 @@
     <MESSAGE value="Update VM configuration and streamline provisioning steps&#10;&#10;Enabled `allow_stopping_for_update` to facilitate VM updates. Replaced comments in provisioning scripts for clarity and made minor adjustments to Docker installation steps, ensuring consistency and improved readability." />
     <MESSAGE value="`Streamline VM setup and update cloud-init provisioning`&#10;&#10;Refactored VM configuration to improve clarity and consistency. Replaced inline provisioning steps with a cloud-init YAML configuration, simplifying the deployment process. Updated SSH and network configurations, optimized subnet ranges, and enhanced Docker setup for better maintainability." />
     <MESSAGE value="Add cloud-init wait step after Terraform apply&#10;&#10;This ensures sufficient time for cloud-init to complete its tasks before proceeding. The step waits for 10 minutes, improving deployment stability and reliability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add cloud-init wait step after Terraform apply&#10;&#10;This ensures sufficient time for cloud-init to complete its tasks before proceeding. The step waits for 10 minutes, improving deployment stability and reliability." />
+    <MESSAGE value="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
   </component>
 </project>
