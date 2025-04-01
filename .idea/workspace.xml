@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,15 +113,7 @@
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
       <workItem from="1743512000458" duration="7158000" />
-      <workItem from="1743521334183" duration="23798000" />
-    </task>
-    <task id="LOCAL-00065" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738013637569</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1738013637569</updated>
+      <workItem from="1743521334183" duration="24194000" />
     </task>
     <task id="LOCAL-00066" summary="fix deploy">
       <option name="closed" value="true" />
@@ -507,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743549899215</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability.">
+      <option name="closed" value="true" />
+      <created>1743550331532</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1743550331532</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,6 +544,7 @@
     <MESSAGE value="`Streamline VM setup and update cloud-init provisioning`&#10;&#10;Refactored VM configuration to improve clarity and consistency. Replaced inline provisioning steps with a cloud-init YAML configuration, simplifying the deployment process. Updated SSH and network configurations, optimized subnet ranges, and enhanced Docker setup for better maintainability." />
     <MESSAGE value="Add cloud-init wait step after Terraform apply&#10;&#10;This ensures sufficient time for cloud-init to complete its tasks before proceeding. The step waits for 10 minutes, improving deployment stability and reliability." />
     <MESSAGE value="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
+    <MESSAGE value="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
   </component>
 </project>

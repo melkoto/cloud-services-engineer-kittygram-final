@@ -216,7 +216,9 @@ jobs:
     steps:
       - name: Extract commit message
         id: extract_commit_message
-        run: echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+        run: |
+          COMMIT=$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ')
+          echo "COMMIT_MESSAGE=${COMMIT}" >> $GITHUB_ENV
 
       - name: Send message
         uses: appleboy/telegram-action@master
