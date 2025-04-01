@@ -51,6 +51,14 @@ jobs:
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
           YC_ZONE: ${{ secrets.YC_ZONE }}
 
+      - name: Wait for cloud-init
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: |
+          echo "Waiting for cloud-init to complete (10 minutes)..."
+          sleep 600
+          echo "Cloud-init wait completed"
+
+
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: terraform destroy -auto-approve
