@@ -21,7 +21,7 @@ resource "yandex_compute_instance" "kittygram_vm" {
   }
 
   metadata = {
-    ssh-keys  = "ubuntu:${file(var.ssh_pub_key_path)}"
+    ssh-keys = "ubuntu:${file(var.ssh_pub_key_path)}"
   }
 
   connection {
@@ -34,28 +34,31 @@ resource "yandex_compute_instance" "kittygram_vm" {
 
   provisioner "remote-exec" {
     inline = [
-      # Обновляем пакеты и устанавливаем необходимые утилиты
+      // Обновляем пакеты и устанавливаем утилиты с принудительным использованием IPv4
       "sudo apt-get update -o Acquire::ForceIPv4=true",
       "sudo apt-get install -y -o Acquire::ForceIPv4=true apt-transport-https ca-certificates curl gnupg lsb-release",
 
-      # Добавляем официальный репозиторий Docker
+      // Добавляем официальный репозиторий Docker
       "curl -4 -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
       "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
 
-      # Обновляем apt после добавления репозитория
+      // Обновляем apt после добавления репозитория
       "sudo apt-get update -o Acquire::ForceIPv4=true",
 
-      # Устанавливаем Docker и дополнительные компоненты
+      // Устанавливаем Docker и компоненты
       "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin",
 
-      # Запускаем и включаем Docker
+      // Обновляем secure_path в sudoers, чтобы docker был доступен при вызове sudo
+      "sudo sed -i 's|^Defaults\\s\\+secure_path=.*|Defaults secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"|' /etc/sudoers",
+
+      // Запускаем и включаем Docker
       "sudo systemctl enable docker",
       "sudo systemctl start docker",
 
-      # Добавляем пользователя ubuntu в группу docker
+      // Добавляем пользователя ubuntu в группу docker
       "sudo usermod -aG docker ubuntu",
 
-      # Проверяем установку Docker
+      // Проверяем установку Docker
       "docker --version"
     ]
   }
