@@ -6,7 +6,7 @@ resource "yandex_compute_instance" "kittygram_vm" {
 
   resources {
     cores  = 2
-    memory = 2
+    memory = 2 //
   }
 
   boot_disk {
