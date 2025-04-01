@@ -1,6 +1,10 @@
+apt:
+  config:
+    - Acquire::ForceIPv4 "true"
 package_update: true
 package_upgrade: true
 runcmd:
+  - sed -i 's|http://mirror.yandex.ru/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
   - apt-get update -o Acquire::ForceIPv4=true
   - apt-get install -y -o Acquire::ForceIPv4=true docker.io docker-compose
   - systemctl enable docker

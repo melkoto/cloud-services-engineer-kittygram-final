@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges.">
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Streamline package installation and enforce IPv4 usage&#10;&#10;Moved package installation to runcmd with explicit IPv4 enforcement via apt-get flags. Removed deprecated config and packages sections for better clarity and alignment with current practices.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infra/cloud-init.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/infra/cloud-init.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,23 +115,7 @@
       <workItem from="1737998178440" duration="20013000" />
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
-      <workItem from="1743512000458" duration="5802000" />
-    </task>
-    <task id="LOCAL-00053" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738005407829</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1738005407829</updated>
-    </task>
-    <task id="LOCAL-00054" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738005813541</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1738005813541</updated>
+      <workItem from="1743512000458" duration="7052000" />
     </task>
     <task id="LOCAL-00055" summary="fix deploy">
       <option name="closed" value="true" />
@@ -508,7 +493,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743519289642</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Enable IPv4 for apt and clean up Docker installation steps&#10;&#10;Force IPv4 for apt to prevent potential network issues during package installation. Removed redundant apt-get commands for Docker as packages are already specified for installation. Simplified the sudoers file operation by omitting unrelated configuration changes.">
+      <option name="closed" value="true" />
+      <created>1743519875110</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1743519875110</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Streamline package installation and enforce IPv4 usage&#10;&#10;Moved package installation to runcmd with explicit IPv4 enforcement via apt-get flags. Removed deprecated config and packages sections for better clarity and alignment with current practices.">
+      <option name="closed" value="true" />
+      <created>1743520202032</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1743520202032</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,6 +536,8 @@
     <MESSAGE value="Update cloud-init to install Docker with apt-get command&#10;&#10;Replaced `package` directives with explicit `apt-get` install for Docker and Docker Compose to ensure compatibility and correctness during setup. Adjusted commands to maintain Docker service enablement and startup." />
     <MESSAGE value="Add logging of Docker binary path during cloud-init&#10;&#10;This ensures the path of the Docker binary is recorded in `/tmp/docker_path.log`. It can help with troubleshooting and verifying the installation process in cloud-init." />
     <MESSAGE value="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update sudoers secure_path instead of logging docker path&#10;&#10;Replaced the logging of Docker's installation path with a modification to the `secure_path` in `/etc/sudoers`. This ensures a consistent and reliable command execution environment for users with sudo privileges." />
+    <MESSAGE value="Enable IPv4 for apt and clean up Docker installation steps&#10;&#10;Force IPv4 for apt to prevent potential network issues during package installation. Removed redundant apt-get commands for Docker as packages are already specified for installation. Simplified the sudoers file operation by omitting unrelated configuration changes." />
+    <MESSAGE value="Streamline package installation and enforce IPv4 usage&#10;&#10;Moved package installation to runcmd with explicit IPv4 enforcement via apt-get flags. Removed deprecated config and packages sections for better clarity and alignment with current practices." />
+    <option name="LAST_COMMIT_MESSAGE" value="Streamline package installation and enforce IPv4 usage&#10;&#10;Moved package installation to runcmd with explicit IPv4 enforcement via apt-get flags. Removed deprecated config and packages sections for better clarity and alignment with current practices." />
   </component>
 </project>
