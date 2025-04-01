@@ -1,11 +1,38 @@
-apt:
-  config:
-    - Acquire::ForceIPv4 "true"
+#cloud-config
+
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXcg0PZQSHGjP6iboZQ/HvxVC04oE5sBEewQMMT5PDK m.movsar@gmail.com
+
 package_update: true
 package_upgrade: true
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - git
+
 runcmd:
-  - curl -fsSL https://get.docker.com -o get-docker.sh
-  - sh get-docker.sh
+  # Удаление старых версий Docker (если установлены)
+  - apt-get remove -y docker docker-engine docker.io containerd runc || true
+
+  # Установка Docker для Ubuntu 22.04 (jammy)
+  - mkdir -p /etc/apt/keyrings
+  - curl -4 -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker-archive-keyring.gpg
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - apt-get update -o Acquire::ForceIPv4=true
+  - apt-get install -y -o Acquire::ForceIPv4=true docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+  # Добавление пользователя ubuntu в группу docker
   - usermod -aG docker ubuntu
-  - systemctl enable docker
-  - systemctl start docker
+
+  # Создание директории для приложения
+  - mkdir -p /home/ubuntu/kittygram
+  - chown ubuntu:ubuntu /home/ubuntu/kittygram

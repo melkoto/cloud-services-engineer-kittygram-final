@@ -1,12 +1,11 @@
 resource "yandex_compute_instance" "kittygram_vm" {
-  name        = "kittygram-vm"
-  platform_id = "standard-v3"
+  name = "kittygram-vm"
 
-  allow_stopping_for_update = true
+  platform_id = "standard-v3"
 
   resources {
     cores  = 2
-    memory = 2 //
+    memory = 2
   }
 
   boot_disk {
@@ -24,41 +23,6 @@ resource "yandex_compute_instance" "kittygram_vm" {
 
   metadata = {
     ssh-keys  = "ubuntu:${file(var.ssh_pub_key_path)}"
-  }
-
-  connection {
-    type        = "ssh"
-    host        = self.network_interface[0].nat_ip_address
-    user        = "ubuntu"
-    private_key = file("~/.ssh/id_ed25519")
-    timeout     = "2m"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      # Обновляем пакеты и устанавливаем необходимые утилиты
-      "sudo apt-get update -o Acquire::ForceIPv4=true",
-      "sudo apt-get install -y -o Acquire::ForceIPv4=true apt-transport-https ca-certificates curl gnupg lsb-release",
-
-      # Добавляем официальный репозиторий Docker
-      "curl -4 -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
-      "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
-
-      # Обновляем apt после добавления репозитория
-      "sudo apt-get update -o Acquire::ForceIPv4=true",
-
-      # Устанавливаем Docker и дополнительные компоненты
-      "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin",
-
-      # Запускаем и включаем Docker
-      "sudo systemctl enable docker",
-      "sudo systemctl start docker",
-
-      # Добавляем пользователя ubuntu в группу docker
-      "sudo usermod -aG docker ubuntu",
-
-      # Проверяем установку Docker
-      "docker --version"
-    ]
+    user-data = file("cloud-init.yaml")
   }
 }

@@ -7,12 +7,11 @@ terraform {
   }
 
   backend "s3" {
-    endpoint = "https://storage.yandexcloud.net"
-    bucket = "kitty-backet"
-    region = "ru-central1"
-    key    = "tf-state/terraform.tfstate"
-
-    skip_region_validation      = true
+    endpoint                   = "https://storage.yandexcloud.net"
+    bucket                     = "kitty-backet"
+    region                     = "ru-central1"
+    key                        = "tf-state/terraform.tfstate"
+    skip_region_validation     = true
     skip_credentials_validation = true
   }
 }

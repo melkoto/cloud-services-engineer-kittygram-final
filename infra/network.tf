@@ -18,23 +18,21 @@ resource "yandex_vpc_security_group" "kittygram_sg" {
   network_id  = yandex_vpc_network.kittygram_network.id
 
   ingress {
-    protocol    = "TCP"
-    from_port   = 22
-    to_port     = 22
+    protocol       = "TCP"
+    port           = 22
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    protocol    = "TCP"
-    from_port   = 80
-    to_port     = 80
+    protocol       = "TCP"
+    port           = 80
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    protocol    = "TCP"
-    from_port   = 0
-    to_port     = 0
+    protocol       = "ANY"
+    from_port      = 0
+    to_port        = 65535
     v4_cidr_blocks = ["0.0.0.0/0"]
   }
 }
