@@ -7,5 +7,4 @@ runcmd:
   - apt-get install -y docker.io docker-compose
   - systemctl enable docker
   - systemctl start docker
-  - which docker > /tmp/docker_path.log
-
+  - sed -i 's|^Defaults\s\+secure_path=.*|Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"|' /etc/sudoers
