@@ -40,9 +40,3 @@ variable "ssh_pub_key_path" {
   type        = string
   default     = "~/.ssh/id_ed25519.pub"
 }
-
-variable "ssh_username" {
-  description = "Имя пользователя для SSH-подключения"
-  type        = string
-  default     = "ubuntu"
-}
