@@ -1,11 +1,7 @@
-apt:
-  config:
-    Acquire::ForceIPv4 "true"
 package_update: true
 package_upgrade: true
-packages:
-  - docker.io
-  - docker-compose
 runcmd:
+  - apt-get update -o Acquire::ForceIPv4=true
+  - apt-get install -y -o Acquire::ForceIPv4=true docker.io docker-compose
   - systemctl enable docker
   - systemctl start docker
