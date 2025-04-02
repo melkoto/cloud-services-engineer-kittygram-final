@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
+    <list default="true" id="9ce91571-2255-44d4-8a4b-48cdf49dd6c8" name="Changes" comment="Simplify commit message extraction in GitHub workflow.&#10;&#10;Replaced newline characters in commit messages with spaces to ensure proper formatting when storing the message in the environment variable. This prevents potential issues caused by multiline commit messages.">
+      <change afterPath="$PROJECT_DIR$/kittigram_workflow_terraform.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kittygram_workflow.yml" beforeDir="false" afterPath="$PROJECT_DIR$/kittygram_workflow.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,15 +118,7 @@
       <workItem from="1738080077847" duration="13041000" />
       <workItem from="1743369087524" duration="12659000" />
       <workItem from="1743512000458" duration="7158000" />
-      <workItem from="1743521334183" duration="24194000" />
-    </task>
-    <task id="LOCAL-00066" summary="fix deploy">
-      <option name="closed" value="true" />
-      <created>1738013999069</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1738013999069</updated>
+      <workItem from="1743521334183" duration="25524000" />
     </task>
     <task id="LOCAL-00067" summary="fix deploy">
       <option name="closed" value="true" />
@@ -507,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743550331532</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="Simplify commit message extraction in GitHub workflow.&#10;&#10;Replaced newline characters in commit messages with spaces to ensure proper formatting when storing the message in the environment variable. This prevents potential issues caused by multiline commit messages.">
+      <option name="closed" value="true" />
+      <created>1743550771169</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1743550771169</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,6 +550,7 @@
     <MESSAGE value="Add cloud-init wait step after Terraform apply&#10;&#10;This ensures sufficient time for cloud-init to complete its tasks before proceeding. The step waits for 10 minutes, improving deployment stability and reliability." />
     <MESSAGE value="Update kittygram_domain in tests.yml&#10;&#10;Changed the domain for the kittygram service to a new IP address. This ensures the tests point to the correct environment." />
     <MESSAGE value="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add healthcheck for the PostgreSQL service&#10;&#10;This ensures the PostgreSQL container is healthy by periodically running a readiness check using `pg_isready`. It improves the reliability of dependent services by verifying database availability." />
+    <MESSAGE value="Simplify commit message extraction in GitHub workflow.&#10;&#10;Replaced newline characters in commit messages with spaces to ensure proper formatting when storing the message in the environment variable. This prevents potential issues caused by multiline commit messages." />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplify commit message extraction in GitHub workflow.&#10;&#10;Replaced newline characters in commit messages with spaces to ensure proper formatting when storing the message in the environment variable. This prevents potential issues caused by multiline commit messages." />
   </component>
 </project>
